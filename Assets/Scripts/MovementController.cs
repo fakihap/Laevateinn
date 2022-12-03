@@ -9,13 +9,14 @@ public class MovementController : MonoBehaviour
 
     [Header("Properties")]
     [SerializeField] private Rigidbody2D rb;
-    [Range(0, 5)] private float xMoveSpeed = 1f , yMoveSpeed = 1f;
-    [Range(0.1f, 5f)] private float onGroundRaycastLength = 1f;
+    [SerializeField][Range(0, 10)] private float xMoveSpeed = 1f , yMoveSpeed = 1f;
+    [SerializeField][Range(0.1f, 5f)] private float onGroundRaycastLength = 1f;
     [SerializeField] LayerMask groundMask;
 
 
     [Header("In-Game Properties")]
-    [SerializeField] private float currentXMoveSpeed, currentYMoveSpeed;
+    [SerializeField] private float currentXMoveSpeed;
+    [SerializeField] private float currentYMoveSpeed;
     [SerializeField] private bool onGround = false;
 
     // Start is called before the first frame update
@@ -28,6 +29,7 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         Move();
+        Attack();
     }
 
 
@@ -36,7 +38,7 @@ public class MovementController : MonoBehaviour
         currentYMoveSpeed = Input.GetAxisRaw("Vertical") * yMoveSpeed;
 
         if ( Mathf.Abs(currentXMoveSpeed) > 0 ) {
-            rb.AddForce(new Vector2(currentXMoveSpeed, rb.velocity.y));
+            rb.velocity = new Vector2(currentXMoveSpeed, rb.velocity.y);
         }
 
         if ( canJump() && Mathf.Abs(currentYMoveSpeed) > 0 ) {
@@ -49,5 +51,9 @@ public class MovementController : MonoBehaviour
     bool canJump(){
         if ( debugMode ) Debug.DrawLine(transform.position, transform.position + Vector3.down * onGroundRaycastLength, Color.red);
         return Physics2D.Raycast(transform.position, Vector2.down, onGroundRaycastLength, groundMask);
+    }
+
+    void Attack(){
+
     }
 }

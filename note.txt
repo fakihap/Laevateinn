@@ -1,0 +1,14 @@
+Laevatein
+
+asymmtric game
+
+basic att - space
+dash dodge with - space space^
+laevatein sentence - space^
+
+
+
+
+exhaustion bar <- player need to stand still
+
+
