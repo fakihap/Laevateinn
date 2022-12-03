@@ -12,6 +12,7 @@ public class MovementController : MonoBehaviour
     [SerializeField][Range(0, 10)] private float xMoveSpeed = 1f , yMoveSpeed = 1f;
     [SerializeField][Range(0.1f, 5f)] private float onGroundRaycastLength = 1f;
     [SerializeField] LayerMask groundMask;
+    [SerializeField] Animator playerAnimator;
 
 
     [Header("In-Game Properties")]
@@ -19,17 +20,21 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float currentYMoveSpeed;
     [SerializeField] private bool onGround = false;
 
+    [Header("Attack Action")]
+    [SerializeField] private GameObject laevateinn;
+    [SerializeField] private int attackState = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
-        Attack();
+        LocomoteAttack();
     }
 
 
@@ -50,10 +55,24 @@ public class MovementController : MonoBehaviour
 
     bool canJump(){
         if ( debugMode ) Debug.DrawLine(transform.position, transform.position + Vector3.down * onGroundRaycastLength, Color.red);
-        return Physics2D.Raycast(transform.position, Vector2.down, onGroundRaycastLength, groundMask);
+        
+        onGround = Physics2D.Raycast(transform.position, Vector2.down, onGroundRaycastLength, groundMask);
+
+        return onGround;
     }
 
-    void Attack(){
+    void LocomoteAttack(){
+        if ( Input.GetKeyDown(KeyCode.Space) ){
+            Attack();
+        }
 
+        playerAnimator.SetInteger("attackState", attackState);
+    }
+    void Attack(){
+        attackState++;
+
+        if (attackState > 3) {
+            attackState = 0;
+        }
     }
 }
