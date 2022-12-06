@@ -52,6 +52,8 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 100
   col: {fileID: 0}
+  movementController: {fileID: 0}
+  damageImpactAmount: 5
 --- !u!70 &3959487868291287363
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

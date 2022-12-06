@@ -9,7 +9,7 @@ public abstract class MovementController : MonoBehaviour
     [SerializeField] protected bool debugMode = false;
 
     [Header("Properties")]
-    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField][Range(0, 10)] protected float xMoveSpeed = 1f , yMoveSpeed = 1f;
     [SerializeField][Range(0.1f, 5f)] protected float onGroundRaycastLength = 1f;
     [SerializeField] protected LayerMask groundMask;
@@ -22,7 +22,7 @@ public abstract class MovementController : MonoBehaviour
 
     [Header("In-Game Properties")]
     [SerializeField] protected int faceDirection = 1;
-    [SerializeField] protected bool canMove = true;
+    [SerializeField] public bool canMove = true;
     // [SerializeField] protected bool canJump;
     [SerializeField] protected float currentXMoveSpeed;
     [SerializeField] protected float currentYMoveSpeed;

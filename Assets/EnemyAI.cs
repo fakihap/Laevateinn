@@ -9,9 +9,9 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] GameObject player;
 
-    [SerializeField] float targetDistanceToPlayer = 3;
+    [SerializeField] public float targetDistanceToPlayer = 3;
     [SerializeField] float currentDistanceToPlayer;
-    [SerializeField] float followThreshold = 1.2f;
+    [SerializeField] public float followThreshold = 2f;
 
     void Start(){
         if(movementController == null){
@@ -22,10 +22,12 @@ public class EnemyAI : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
         }
     }
-
-    // Update is called once per frame
     void Update()
     {
+        FollowPlayer();
+    }
+
+    void FollowPlayer(){
         currentDistanceToPlayer = transform.position.x - player.transform.position.x;
         // move
         if (Mathf.Abs(currentDistanceToPlayer) >= followThreshold * targetDistanceToPlayer){ // change this static value
@@ -37,16 +39,5 @@ public class EnemyAI : MonoBehaviour
         }
         
         movementController.SetMovement(xMoveInput, yMoveInput);
-
-
-        // attack
-        // if (Input.GetKeyDown(KeyCode.Space)){
-        //     movementController.Attack();
-        // }
-
-        // // dash attack
-        // if (Input.GetKey(KeyCode.Space)){
-        //     movementController.DashAttack();
-        // }
     }
 }
