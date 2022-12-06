@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public float xMoveInput = 0;
-    public float yMoveInput = 0;
-
+    private float xMoveInput = 0, yMoveInput = 0;
     MovementController movementController;
 
     void Start(){

@@ -123,7 +123,7 @@ public class MovementController : MonoBehaviour
     }
 
     public void SetMovement(float xValue, float yValue){
-        xMoveInput = xValue;
-        yMoveInput = yValue;
+        xMoveInput = Mathf.Clamp(xValue, -1, 1);
+        yMoveInput = Mathf.Clamp(yValue, -1, 1);
     }
 }
