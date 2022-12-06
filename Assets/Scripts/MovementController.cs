@@ -14,6 +14,10 @@ public class MovementController : MonoBehaviour
     [SerializeField] LayerMask groundMask;
     [SerializeField] Animator playerAnimator;
 
+    [Header("Input")]
+    [SerializeField] private float xMoveInput = 0;
+    [SerializeField] private float yMoveInput = 0;
+
 
     [Header("In-Game Properties")]
     [SerializeField] private float currentXMoveSpeed;
@@ -23,6 +27,8 @@ public class MovementController : MonoBehaviour
     [Header("Attack Action")]
     [SerializeField] private GameObject laevateinn;
     [SerializeField] private int attackState = 0;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -34,16 +40,16 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         Move();
-        LocomoteAttack();
+        // LocomoteAttack();
     }
 
 
     void Move(){
-        currentXMoveSpeed = Input.GetAxisRaw("Horizontal") * xMoveSpeed;
-        currentYMoveSpeed = Input.GetAxisRaw("Vertical") * yMoveSpeed;
+        currentXMoveSpeed = xMoveInput * xMoveSpeed;
+        currentYMoveSpeed = yMoveInput * yMoveSpeed;
 
         if ( Mathf.Abs(currentXMoveSpeed) > 0 ) {
-            rb.velocity = new Vector2(currentXMoveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(currentXMoveSpeed, rb.velocity.y); // enforcing a set speed
         }
 
         if ( canJump() && Mathf.Abs(currentYMoveSpeed) > 0 ) {
@@ -61,18 +67,22 @@ public class MovementController : MonoBehaviour
         return onGround;
     }
 
-    void LocomoteAttack(){
-        if ( Input.GetKeyDown(KeyCode.Space) ){
-            Attack();
-        }
-
-        playerAnimator.SetInteger("attackState", attackState);
-    }
-    void Attack(){
+    public void Attack(){
         attackState++;
 
-        if (attackState > 3) {
+        playerAnimator.SetInteger("attackState", attackState);
+
+        if (attackState >= 3) {
             attackState = 0;
         }
+    }
+
+    private void DashAttack(){
+
+    }
+
+    public void SetMovement(float xValue, float yValue){
+        xMoveInput = xValue;
+        yMoveInput = yValue;
     }
 }
