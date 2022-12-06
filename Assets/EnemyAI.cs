@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     private float xMoveInput = 0, yMoveInput = 0;
-    MovementController movementController;
+    [SerializeField] EnemyMovement movementController;
 
     [SerializeField] GameObject player;
 
@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start(){
         if(movementController == null){
-            movementController = GetComponent<MovementController>();
+            movementController = GetComponent<EnemyMovement>();
         }
 
         if (player == null){

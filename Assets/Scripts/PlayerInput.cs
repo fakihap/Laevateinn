@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     private float xMoveInput = 0, yMoveInput = 0;
-    MovementController movementController;
+    PlayerMovement movementController;
 
     void Start(){
         if(movementController == null){
-            movementController = GetComponent<MovementController>();
+            movementController = GetComponent<PlayerMovement>();
         }
     }
 
