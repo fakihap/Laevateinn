@@ -28,5 +28,10 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)){
             movementController.Attack();
         }
+
+        // dash attack
+        if (Input.GetKey(KeyCode.Space)){
+            movementController.DashAttack();
+        }
     }
 }

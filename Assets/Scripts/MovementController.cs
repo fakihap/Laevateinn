@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovementController : MonoBehaviour
 {
+    #region properties
     [Header("Debug")]
     [SerializeField] bool debugMode = false;
 
@@ -20,6 +22,8 @@ public class MovementController : MonoBehaviour
 
 
     [Header("In-Game Properties")]
+    [SerializeField] private bool canMove = true;
+    // [SerializeField] private bool canJump;
     [SerializeField] private float currentXMoveSpeed;
     [SerializeField] private float currentYMoveSpeed;
     [SerializeField] private bool onGround = false;
@@ -27,8 +31,13 @@ public class MovementController : MonoBehaviour
     [Header("Attack Action")]
     [SerializeField] private GameObject laevateinn;
     [SerializeField] private int attackState = 0;
+    [SerializeField] private float timeSpendHold = 0;
+    [SerializeField][Range(0, 1f)] private float dashAttackThreshold = .3f;
+    [SerializeField] private bool hasDashAttacked = false;
+    [SerializeField][Range(0, 40f)] private float dashAmount = 20f;
+    [SerializeField] private float dashTime = .7f;
 
-    
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +54,10 @@ public class MovementController : MonoBehaviour
 
 
     void Move(){
+        if(!canMove){
+            return;
+        }
+        
         currentXMoveSpeed = xMoveInput * xMoveSpeed;
         currentYMoveSpeed = yMoveInput * yMoveSpeed;
 
@@ -75,10 +88,36 @@ public class MovementController : MonoBehaviour
         if (attackState >= 3) {
             attackState = 0;
         }
+
+        hasDashAttacked = false;
+    }
+    public void DashAttack(){
+        if (hasDashAttacked) return;
+
+        timeSpendHold += Time.deltaTime;
+
+        if(timeSpendHold >= dashAttackThreshold){
+            timeSpendHold = 0;
+            hasDashAttacked = true; //cooldown
+
+            //execute dash attack
+            // todo: not in the first slash
+            StartCoroutine(executeDashAttack());
+        }
     }
 
-    private void DashAttack(){
+    IEnumerator executeDashAttack(){
+        canMove = false;
 
+        // rb.AddForce(dashAmount * Vector2.right, ForceMode2D.Impulse);
+        rb.velocity = new Vector2(dashAmount, rb.velocity.y);
+
+        yield return new WaitForSeconds(dashTime);
+
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        playerAnimator.SetInteger("attackState", 0);
+
+        canMove = true;
     }
 
     public void SetMovement(float xValue, float yValue){

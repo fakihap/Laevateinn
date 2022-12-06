@@ -13,3 +13,6 @@ exhaustion bar <- player need to stand still
 
 3-4 staging
 4-5.30 movement and attack
+
+
+note change drag when on air

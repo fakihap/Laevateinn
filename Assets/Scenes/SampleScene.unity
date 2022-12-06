@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 855074148}
   - component: {fileID: 855074147}
   - component: {fileID: 855074150}
+  - component: {fileID: 855074152}
   - component: {fileID: 855074151}
   m_Layer: 0
   m_Name: Player
@@ -413,11 +414,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   playerAnimator: {fileID: 855074151}
+  xMoveInput: 0
+  yMoveInput: 0
+  canMove: 1
   currentXMoveSpeed: 0
   currentYMoveSpeed: 0
   onGround: 0
   laevateinn: {fileID: 1304434459}
   attackState: 0
+  timeSpendHold: 0
+  dashAttackThreshold: 0.4
+  hasDashAttacked: 0
+  dashAmount: 25
+  dashTime: 0.15
 --- !u!95 &855074151
 Animator:
   serializedVersion: 4
@@ -438,6 +447,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &855074152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855074146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673c014e3cd10a342860c5568eac0dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xMoveInput: 0
+  yMoveInput: 0
 --- !u!1 &1006004969
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +656,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
