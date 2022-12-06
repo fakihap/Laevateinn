@@ -22,6 +22,7 @@ public class StatusManager : MonoBehaviour
     void Update(){
         if(currentHealth <= 0){
             Debug.LogWarning(transform.name + " dies");
+            Destroy(transform.gameObject);
         }
     }
 

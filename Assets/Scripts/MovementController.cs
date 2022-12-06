@@ -22,6 +22,7 @@ public class MovementController : MonoBehaviour
 
 
     [Header("In-Game Properties")]
+    [SerializeField] private int faceDirection = 1;
     [SerializeField] private bool canMove = true;
     // [SerializeField] private bool canJump;
     [SerializeField] private float currentXMoveSpeed;
@@ -49,7 +50,7 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         Move();
-        // LocomoteAttack();
+        UpdateFaceDirection();
     }
 
 
@@ -110,7 +111,7 @@ public class MovementController : MonoBehaviour
         canMove = false;
 
         // rb.AddForce(dashAmount * Vector2.right, ForceMode2D.Impulse);
-        rb.velocity = new Vector2(dashAmount, rb.velocity.y);
+        rb.velocity = new Vector2(dashAmount * faceDirection, rb.velocity.y);
         playerAnimator.SetTrigger("dashAttack");
 
         yield return new WaitForSeconds(dashTime);
@@ -125,5 +126,13 @@ public class MovementController : MonoBehaviour
     public void SetMovement(float xValue, float yValue){
         xMoveInput = Mathf.Clamp(xValue, -1, 1);
         yMoveInput = Mathf.Clamp(yValue, -1, 1);
+
+        if (xMoveInput != 0){
+            faceDirection = (int)Mathf.Sign(xMoveInput); // care : enemy will also flip
+        }
+    }
+
+    void UpdateFaceDirection(){
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * faceDirection, transform.localScale.y, transform.localScale.z);
     }
 }
