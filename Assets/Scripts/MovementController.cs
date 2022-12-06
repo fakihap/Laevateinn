@@ -111,12 +111,14 @@ public class MovementController : MonoBehaviour
 
         // rb.AddForce(dashAmount * Vector2.right, ForceMode2D.Impulse);
         rb.velocity = new Vector2(dashAmount, rb.velocity.y);
+        playerAnimator.SetTrigger("dashAttack");
 
         yield return new WaitForSeconds(dashTime);
 
         rb.velocity = new Vector2(0, rb.velocity.y);
-        playerAnimator.SetInteger("attackState", 0);
-
+        
+        
+        playerAnimator.SetTrigger("endDashAttack");
         canMove = true;
     }
 
